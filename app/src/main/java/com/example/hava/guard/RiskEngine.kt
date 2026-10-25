@@ -26,10 +26,8 @@ class RiskEngine {
         }
 
         if (UserRisk.PRECIPITATION in settings.enabled) keep(precipitation(ordered, settings))
-        if (UserRisk.WIND in settings.enabled) {
-            keep(wind(ordered, settings))
-            keep(gust(ordered, settings))
-        }
+        if (UserRisk.WIND in settings.enabled) keep(wind(ordered, settings))
+        if (UserRisk.GUST in settings.enabled) keep(gust(ordered, settings))
         if (UserRisk.HEAT in settings.enabled) keep(heat(ordered, settings))
         if (UserRisk.FROST in settings.enabled) keep(frost(ordered, settings))
         if (UserRisk.UV in settings.enabled) keep(uv(ordered, settings))

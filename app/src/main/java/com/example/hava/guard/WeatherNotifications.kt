@@ -15,6 +15,7 @@ import com.example.hava.R
 object WeatherNotifications {
 
     const val CHANNEL_ID = "weatherguard_risks"
+    private const val BRAND_COLOR = 0xFF5B55E7.toInt()
     const val EXTRA_TOKEN = "guard_token"
     const val EXTRA_CITY_ID = "guard_city_id"
     const val EXTRA_CITY_NAME = "guard_city_name"
@@ -37,8 +38,9 @@ object WeatherNotifications {
         val manager = NotificationManagerCompat.from(context)
         for (notice in notices) {
             val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(context.getString(R.string.guard_notification_title, notice.cityName, context.getString(notice.risk.titleRes())))
+                .setSmallIcon(R.drawable.ic_stat_guard)
+                .setColor(BRAND_COLOR)
+                .setContentTitle(context.getString(R.string.guard_notification_title, context.getString(notice.risk.titleRes())))
                 .setContentText(body(context, notice))
                 .setStyle(NotificationCompat.BigTextStyle().bigText(body(context, notice)))
                 .setContentIntent(openGuard(context, notice))
@@ -51,11 +53,10 @@ object WeatherNotifications {
 
     private fun body(context: Context, notice: RiskNotice): String {
         val whenText = notice.validAt?.substringAfter('T')?.take(5)
-            ?.let { context.getString(R.string.guard_valid_at, it) }
             ?: context.getString(R.string.guard_observed_unknown)
         val action = context.getString(notice.reason.actionRes())
         val level = context.getString(notice.level.labelRes())
-        return context.getString(R.string.guard_notification_body, level, whenText, action)
+        return context.getString(R.string.guard_notification_body, notice.cityName, whenText, level, action)
     }
 
     private fun openGuard(context: Context, notice: RiskNotice): PendingIntent {

@@ -33,10 +33,13 @@ data class FavoriteGuard(
 )
 
 data class GuardUiState(
+    val city: City? = null,
     val cityName: String = "",
     val observedAt: String? = null,
     val settings: RiskSettings = RiskSettings(),
     val report: GuardReport? = null,
+    val hours: List<HourConditions> = emptyList(),
+    val isFavorite: Boolean = false,
     val favorites: List<FavoriteGuard> = emptyList(),
     val waitingForWeather: Boolean = true,
     val notificationsEnabled: Boolean = false,
@@ -64,15 +67,33 @@ class WeatherGuardViewModel(
         hours = report?.toGuardHours().orEmpty()
         _uiState.update {
             it.copy(
+                city = city,
                 cityName = report?.current?.cityName ?: city.name,
                 observedAt = report?.observedAt,
                 settings = settings,
                 report = report?.let { engine.evaluate(hours, settings) },
+                hours = hours,
+                isFavorite = preferences.isFavorite(city.id),
                 waitingForWeather = report == null,
                 notificationsEnabled = preferences.notificationsEnabled(),
             )
         }
         if (report != null) loadFavorites(city, settings)
+    }
+
+    fun toggleFavorite() {
+        val city = _uiState.value.city ?: return
+        val favorite = !preferences.isFavorite(city.id)
+        preferences.setFavorite(city, favorite)
+        _uiState.update { state ->
+            val others = state.favorites.filterNot { it.city.id == city.id }
+            val favorites = if (favorite && !state.waitingForWeather) {
+                others + FavoriteGuard(city, hours, engine.evaluate(hours, state.settings))
+            } else {
+                others
+            }
+            state.copy(isFavorite = favorite, favorites = favorites)
+        }
     }
 
     fun setEnabled(risk: UserRisk, enabled: Boolean) {

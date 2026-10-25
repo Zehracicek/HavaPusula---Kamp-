@@ -6,11 +6,12 @@ import com.example.hava.planb.MeasurementUnit
 
 /**
  * Kullanıcının açıp kapatabildiği riskler.
- * Hamle, rüzgâr tercihine bağlıdır. Gök gürültüsü genel güvenlik kontrolüdür.
+ * Gök gürültüsü genel güvenlik kontrolüdür; kapatılamaz.
  */
 enum class UserRisk {
     PRECIPITATION,
     WIND,
+    GUST,
     HEAT,
     FROST,
     UV,
