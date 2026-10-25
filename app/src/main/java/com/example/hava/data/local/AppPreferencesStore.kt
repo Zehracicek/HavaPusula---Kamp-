@@ -17,7 +17,7 @@ class AppPreferencesStore(context: Context) {
     private val gson = Gson()
 
     fun riskSettings(): RiskSettings = RiskSettings(
-        enabled = UserRisk.entries.filter { preferences.getBoolean(it.prefKey(), true) }.toSet(),
+        enabled = UserRisk.entries.filter { preferences.getBoolean(it.prefKey(), it.defaultEnabled()) }.toSet(),
         precipProbabilityCautionPercent = preferences.getInt(KEY_PRECIP_PROB_CAUTION, 60),
         precipProbabilityHighPercent = preferences.getInt(KEY_PRECIP_PROB_HIGH, 80),
         precipAmountCautionMm = preferences.getFloat(KEY_PRECIP_AMOUNT_CAUTION, 1f).toDouble(),
@@ -98,9 +98,14 @@ class AppPreferencesStore(context: Context) {
 
     private fun encodeFavorites(cities: List<City>): String = gson.toJson(cities)
 
+    /** Hamle eskiden rüzgâr tercihine bağlıydı; ayrı anahtar yoksa o tercih devralınır. */
+    private fun UserRisk.defaultEnabled(): Boolean =
+        if (this == UserRisk.GUST) preferences.getBoolean(KEY_ENABLE_WIND, true) else true
+
     private fun UserRisk.prefKey(): String = when (this) {
         UserRisk.PRECIPITATION -> KEY_ENABLE_PRECIP
         UserRisk.WIND -> KEY_ENABLE_WIND
+        UserRisk.GUST -> KEY_ENABLE_GUST
         UserRisk.HEAT -> KEY_ENABLE_HEAT
         UserRisk.FROST -> KEY_ENABLE_FROST
         UserRisk.UV -> KEY_ENABLE_UV
@@ -111,6 +116,7 @@ class AppPreferencesStore(context: Context) {
         const val KEY_FAVORITES = "favorite_cities"
         const val KEY_ENABLE_PRECIP = "risk_precipitation"
         const val KEY_ENABLE_WIND = "risk_wind"
+        const val KEY_ENABLE_GUST = "risk_gust"
         const val KEY_ENABLE_HEAT = "risk_heat"
         const val KEY_ENABLE_FROST = "risk_frost"
         const val KEY_ENABLE_UV = "risk_uv"

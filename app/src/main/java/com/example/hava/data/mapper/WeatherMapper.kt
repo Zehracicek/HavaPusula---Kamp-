@@ -134,6 +134,8 @@ private fun DailyWeatherDto.toDailyForecasts(): List<DailyForecast> {
     }
 }
 
+fun weatherConditionOf(code: Int): WeatherCondition = conditionOf(code).first
+
 /** WMO hava durumu kodlarını (Open-Meteo) uygulama durumuna çevirir. */
 private fun conditionOf(code: Int): Pair<WeatherCondition, Float> = when (code) {
     0, 1 -> WeatherCondition.CLEAR to 0f
