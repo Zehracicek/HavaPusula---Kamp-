@@ -1,5 +1,25 @@
 <resources>
-    <string name="app_name">Hava Durumu</string>
+    <string name="app_name">HavaPusula</string>
+    <string name="app_tagline">Daha bilinçli planlar, daha güvenli günler</string>
+    <string name="search">Ara</string>
+    <string name="more_options">Diğer seçenekler</string>
+    <string name="nav_more">Daha Fazla</string>
+    <string name="ok">Tamam</string>
+    <string name="close">Kapat</string>
+
+    <string name="home_today">Bugün</string>
+    <string name="home_daily_title">%1$d Günlük Tahmin</string>
+    <string name="home_high_low">H: %1$d°   L: %2$d°</string>
+    <string name="home_details">Detaylar</string>
+    <string name="day_sun">Gün ışığı</string>
+    <string name="day_chart_temperature">Sıcaklık</string>
+    <string name="day_chart_precipitation">Yağış</string>
+    <string name="day_chart_wind">Rüzgâr</string>
+    <string name="day_chart_temperature_note">Saatlik sıcaklık (°C) · Alttaki değer yağış ihtimali. Bir saate dokunarak ayrıntısını gör.</string>
+    <string name="day_chart_precipitation_note">Yağış ihtimali (%) · Alttaki değer beklenen miktar. Bir saate dokunarak ayrıntısını gör.</string>
+    <string name="day_chart_wind_note">Rüzgâr hızı (km/sa) · Oklar rüzgârın estiği yönü gösterir. Bir saate dokunarak ayrıntısını gör.</string>
+    <string name="wind_kmh">%1$d km/sa</string>
+    <string name="precip_mm">%1$s mm</string>
     <string name="search_label">Şehir ara</string>
     <string name="search_placeholder">Örn. Ankara</string>
     <string name="city_not_found">Şehir bulunamadı</string>
@@ -136,9 +156,9 @@
     <string name="weather_thunderstorm_hail">Dolulu fırtına</string>
 
     <string name="planb_open">PlanB</string>
-    <string name="planb_shortcut">Aktiviteye uygun zamanı bul</string>
+    <string name="planb_shortcut">Aktivite planla\nen uygun zamanı bul</string>
     <string name="guard_open">WeatherGuard</string>
-    <string name="guard_shortcut">Riskleri takip et, güvende kal</string>
+    <string name="guard_shortcut">Hava risklerini takip et ve güvende kal</string>
     <string name="nav_home">Ana Sayfa</string>
     <string name="planb_title">PlanB</string>
     <string name="planb_change_city">Şehri değiştir</string>
@@ -151,11 +171,121 @@
     <string name="planb_date">Tarih</string>
     <string name="planb_start_hour">Başlangıç · %1$s</string>
     <string name="planb_end_hour">Bitiş · %1$s</string>
-    <string name="planb_evaluate">Değerlendir</string>
+    <string name="planb_evaluate">Aktiviteyi Değerlendir</string>
     <string name="planb_disclaimer">Eşikler ilk sürüm varsayımıdır; bilimsel sınır olarak sunulmaz.</string>
+    <string name="planb_level_very_suitable">Çok Uygun</string>
     <string name="planb_level_suitable">Uygun</string>
-    <string name="planb_level_caution">Dikkatli olunmalı</string>
-    <string name="planb_level_unsuitable">Uygun değil</string>
+    <string name="planb_level_caution">Dikkatli Olunmalı</string>
+    <string name="planb_level_unsuitable">Uygun Değil</string>
+    <string name="planb_subtitle">Hava durumuna göre en iyi planını yap</string>
+    <string name="planb_banner">Doğru hava, doğru plan.</string>
+    <string name="planb_question">Ne yapmak istiyorsun?</string>
+    <string name="planb_time_range">Saat aralığı</string>
+    <string name="planb_range_value">%1$s - %2$s</string>
+    <string name="planb_pick_hours">Saat aralığını seç</string>
+    <string name="planb_recommended">Önerilen</string>
+    <string name="planb_city_date">%1$s • %2$s</string>
+    <string name="planb_summary_suitable">Hava koşulları %1$s için oldukça elverişli.</string>
+    <string name="planb_summary_caution">Kısmen uygun, bazı riskler var.</string>
+    <string name="planb_summary_unsuitable">Hava koşulları %1$s için elverişsiz.</string>
+    <string name="planb_best_window_title">En uygun zaman aralığı</string>
+    <string name="planb_score_value">(Puan: %1$d)</string>
+    <string name="planb_factors_title">Öne Çıkan Faktörler</string>
+    <string name="planb_watch_title">Dikkat Edilmesi Gerekenler</string>
+    <string name="planb_hourly_title">Saatlik Hava Durumu (Seçilen Aralık)</string>
+    <string name="planb_no_need_title">Plan B gerekmez.</string>
+    <string name="planb_no_need_body">Koşullar aktiviteniz için uygun.</string>
+    <string name="planb_tip_title">Öneri</string>
+    <string name="planb_see_alternatives">Alternatifleri Gör</string>
+    <string name="planb_not_suitable_title">Planın şu an için uygun değil.</string>
+    <string name="planb_partly_title">Planında bazı riskler var.</string>
+    <string name="planb_worst_hour">En zayıf saat %1$s: %2$s.</string>
+    <string name="planb_detail_precip">yağış olasılığı %1$s</string>
+    <string name="planb_detail_wind">rüzgâr %1$d km/sa</string>
+    <string name="planb_detail_temp">sıcaklık %1$d°</string>
+    <string name="planb_alternatives_title">Alternatif Öneriler</string>
+    <string name="planb_better_time">Daha uygun saat</string>
+    <string name="planb_alt_activity">Alternatif aktivite</string>
+    <string name="planb_alt_activity_body">Seçtiğin saatlerde hava koşulları bu aktivite için daha uygun.</string>
+    <string name="planb_indoor_title">Kapalı alan önerisi</string>
+    <string name="planb_indoor_body">%1$s nedeniyle planını kapalı alanda sürdürebilirsin.</string>
+    <string name="planb_no_alternative">Bu gün için daha uygun bir saat veya aktivite bulunamadı.</string>
+    <string name="planb_quote">Hava her zaman planladığın gibi olmayabilir, ama her zaman başka bir seçenek vardır.</string>
+    <string name="planb_pick_activity">Aktivite Seç</string>
+    <string name="planb_factors_picnic">Yağış, rüzgâr, sıcaklık</string>
+    <string name="planb_factors_walk">Sıcaklık, yağış, rüzgâr, hava kalitesi</string>
+    <string name="planb_factors_run">Sıcaklık, hissedilen sıcaklık, yağış, rüzgâr, UV</string>
+    <string name="planb_factors_bike">Rüzgâr, yağış, sıcaklık</string>
+    <string name="planb_factors_beach">Sıcaklık, yağış, rüzgâr, UV, dalga (varsa)</string>
+    <string name="planb_camping">Kamp</string>
+    <string name="planb_hiking">Doğa yürüyüşü</string>
+    <string name="planb_yoga">Yoga</string>
+    <string name="planb_tennis">Tenis</string>
+    <string name="planb_basketball">Basketbol</string>
+    <string name="planb_volleyball">Voleybol</string>
+    <string name="planb_football">Futbol</string>
+    <string name="planb_fishing">Balık tutma</string>
+    <string name="planb_custom">Özel aktivite</string>
+    <string name="planb_custom_tile">Özel ekle</string>
+    <string name="planb_factors_camping">Yağış, rüzgâr, sıcaklık</string>
+    <string name="planb_factors_hiking">Sıcaklık, yağış, rüzgâr, UV</string>
+    <string name="planb_factors_yoga">Sıcaklık, yağış, hafif rüzgâr</string>
+    <string name="planb_factors_tennis">Rüzgâr, yağış (ıslak kort), sıcaklık</string>
+    <string name="planb_factors_basketball">Yağış, sıcaklık, rüzgâr</string>
+    <string name="planb_factors_volleyball">Sıcaklık, yağış, rüzgâr, UV</string>
+    <string name="planb_factors_football">Yağış, sıcaklık, rüzgâr</string>
+    <string name="planb_factors_fishing">Rüzgâr, yağış, sıcaklık, dalga (varsa)</string>
+    <string name="planb_factors_custom">Kendi seçtiğin ölçütler</string>
+    <string name="planb_custom_title">Özel Aktivite</string>
+    <string name="planb_custom_name">Aktivite adı</string>
+    <string name="planb_custom_name_hint">Örn. Okçuluk</string>
+    <string name="planb_custom_examples">Örnekler</string>
+    <string name="planb_custom_factors">Hangi hava koşulları önemli?</string>
+    <string name="planb_custom_temperature">Sana uygun sıcaklık</string>
+    <string name="planb_custom_note">Seçtiğin ölçütler sıkı eşiklerle puanlanır. Şiddetli hava ve fırtına her zaman kontrol edilir.</string>
+    <string name="planb_custom_save">Kaydet ve seç</string>
+    <string name="planb_custom_edit">Düzenle</string>
+    <string name="planb_custom_tracking">Takip edilen ölçütler</string>
+    <string name="planb_custom_f_precip">Yağış</string>
+    <string name="planb_custom_f_wind">Rüzgâr</string>
+    <string name="planb_custom_f_temp">Sıcaklık</string>
+    <string name="planb_custom_f_uv">UV</string>
+    <string name="planb_temp_cool">Serin (5–16°C)</string>
+    <string name="planb_temp_mild">Ilıman (14–25°C)</string>
+    <string name="planb_temp_warm">Sıcak (22–30°C)</string>
+    <string name="planb_example_archery">Okçuluk</string>
+    <string name="planb_example_golf">Golf</string>
+    <string name="planb_example_paragliding">Yamaç paraşütü</string>
+    <string name="planb_example_photo">Fotoğrafçılık</string>
+    <string name="planb_example_garden">Bahçe işleri</string>
+    <string name="cancel">Vazgeç</string>
+    <string name="planb_tab_hourly">Saatlik Karşılaştırma</string>
+    <string name="planb_tab_summary">Özet</string>
+    <string name="planb_suggested_time">Önerilen zaman</string>
+    <string name="planb_suggested_body_full">Bu saatler %1$s için en yüksek puanı alan kesintisiz aralık.</string>
+    <string name="planb_suggested_body_partial">Seçtiğin aralıkta tamamen uygun saat yok; en iyi seçenek bu saat.</string>
+    <string name="planb_hour_no_data">Veri yok</string>
+    <string name="planb_pos_temperature">Sıcaklık ideal seviyede</string>
+    <string name="planb_pos_precip_prob">Yağış olasılığı düşük</string>
+    <string name="planb_pos_precip_amount">Yağış miktarı düşük</string>
+    <string name="planb_pos_wind">Rüzgâr hafif</string>
+    <string name="planb_pos_gust">Rüzgâr hamlesi zayıf</string>
+    <string name="planb_pos_uv">UV seviyesi uygun</string>
+    <string name="planb_pos_code">Hava durumu elverişli</string>
+    <string name="planb_mid_temperature">Sıcaklık sınırda</string>
+    <string name="planb_mid_precip_prob">Yağış olasılığı orta seviyede</string>
+    <string name="planb_mid_precip_amount">Hafif yağış olabilir</string>
+    <string name="planb_mid_wind">Rüzgâr orta seviyede</string>
+    <string name="planb_mid_gust">Rüzgâr hamlesi artabilir</string>
+    <string name="planb_mid_uv">UV seviyesi orta-yüksek</string>
+    <string name="planb_mid_code">Hava durumu değişken</string>
+    <string name="planb_neg_temperature">Sıcaklık konfor aralığı dışında</string>
+    <string name="planb_neg_precip_prob">Yağış olasılığı yüksek</string>
+    <string name="planb_neg_precip_amount">Yağış miktarı yüksek</string>
+    <string name="planb_neg_wind">Rüzgâr kuvvetli</string>
+    <string name="planb_neg_gust">Sert rüzgâr hamlesi</string>
+    <string name="planb_neg_uv">UV seviyesi yüksek</string>
+    <string name="planb_neg_code">Hava durumu elverişsiz</string>
     <string name="planb_score_cd">%1$s uygunluk puanı %2$d, %3$s</string>
     <string name="planb_no_hourly">Bu tarih için saatlik tahmin yok. Günlük özetten saat üretilmedi.</string>
     <string name="planb_missing_critical">Zorunlu ölçüm eksik olduğu için puan üretilmedi: %1$s.</string>
@@ -178,6 +308,11 @@
     <string name="planb_indoor_run">Koşu bandı veya kapalı salon</string>
     <string name="planb_indoor_bike">Kapalı antrenman</string>
     <string name="planb_indoor_pool">Kapalı havuz</string>
+    <string name="planb_indoor_cabin">Bungalov veya kapalı konaklama</string>
+    <string name="planb_indoor_yoga">Stüdyoda yoga</string>
+    <string name="planb_indoor_court">Kapalı kort veya spor salonu</string>
+    <string name="planb_indoor_football">Kapalı halı saha</string>
+    <string name="planb_indoor_general">Aynı aktiviteyi kapalı bir alanda yapmak</string>
     <string name="planb_indoor_line">%1$s nedeniyle alternatif: %2$s.</string>
     <string name="planb_reason_precipitation">yağış</string>
     <string name="planb_reason_heat">yüksek sıcaklık</string>
@@ -224,20 +359,112 @@
     <string name="guard_threshold">Eşik: %1$s</string>
     <string name="guard_measurement">Ölçüm: %1$s</string>
     <string name="guard_level_caution">Dikkat</string>
-    <string name="guard_level_high">Yüksek risk</string>
+    <string name="guard_level_high">Yüksek Risk</string>
     <string name="guard_not_official">Resmî uyarı değil</string>
-    <string name="guard_favorites">Favori şehirler</string>
+    <string name="guard_favorites">Favori Şehirler</string>
+    <string name="guard_subtitle">Hava risklerini takip et, güvende kal.</string>
+    <string name="guard_edit">Düzenle</string>
+    <string name="guard_add_city">Şehir ekle</string>
+    <string name="guard_active_risks">Aktif Riskler</string>
+    <string name="guard_see_all">Tüm Riskleri Gör</string>
+    <string name="guard_see_less">Daha az göster</string>
+    <string name="guard_time_city">Saat: %1$s | %2$s</string>
+    <string name="guard_card_precip">Yüksek Yağış Olasılığı</string>
+    <string name="guard_card_precip_amount">Yoğun Yağış Beklentisi</string>
+    <string name="guard_card_wind">Kuvvetli Rüzgâr</string>
+    <string name="guard_card_gust">Ani Rüzgâr</string>
+    <string name="guard_card_heat">Aşırı Sıcaklık</string>
+    <string name="guard_card_frost">Don Riski</string>
+    <string name="guard_card_uv">UV İndeksi</string>
+    <string name="guard_card_storm">Gök Gürültülü Hava</string>
+    <string name="guard_detail_precip">Yağış Riski</string>
+    <string name="guard_detail_wind">Rüzgâr Riski</string>
+    <string name="guard_detail_gust">Ani Rüzgâr Riski</string>
+    <string name="guard_detail_heat">Sıcaklık Riski</string>
+    <string name="guard_detail_frost">Don Riski</string>
+    <string name="guard_detail_uv">UV Riski</string>
+    <string name="guard_detail_storm">Fırtına Riski</string>
+    <string name="guard_body_precip">Bu saatlerde yağış olasılığı yüksek. Dışarı çıkarken şemsiye almayı unutma.</string>
+    <string name="guard_body_wind">Kuvvetli rüzgâr bekleniyor. Balkondaki gevşek eşyaları kontrol et.</string>
+    <string name="guard_body_gust">Ani rüzgâr hamleleri olabilir. Açık alanda dikkatli ol.</string>
+    <string name="guard_body_heat">Hissedilen sıcaklık yüksek olabilir. Bol su iç, güneşten korun.</string>
+    <string name="guard_body_frost">Sıcaklık don seviyesine inebilir. Buzlanmaya karşı dikkatli ol.</string>
+    <string name="guard_body_uv">UV seviyesi yüksek. Güneş kremi kullan.</string>
+    <string name="guard_body_storm">Gök gürültülü sağanak olabilir. Açık alanda kalma.</string>
+    <string name="guard_why">Neden önemli?</string>
+    <string name="guard_why_above">Bu saatlerde %1$s %2$s ile eşik değerin (%3$s) üzerinde.</string>
+    <string name="guard_why_below">Bu saatlerde %1$s %2$s ile eşik değerin (%3$s) altında.</string>
+    <string name="guard_why_impact">Bu durum dışarıda planlanan aktiviteleri olumsuz etkileyebilir.</string>
+    <string name="guard_what_to_do">Ne yapabilirsin?</string>
+    <string name="guard_source_title">Veri Kaynağı</string>
+    <string name="guard_source_body">Open-Meteo (%1$s)</string>
+    <string name="guard_unfollow">Şehri Takipten Çıkar</string>
+    <string name="guard_follow">Şehri Takip Et</string>
+    <string name="guard_estimated_range">Tahmini zaman aralığı</string>
+    <string name="guard_value_heat">Hissedilen sıcaklık</string>
+    <string name="guard_value_frost">Hava sıcaklığı</string>
+    <string name="guard_value_storm">Gök gürültüsü kodu</string>
+    <string-array name="guard_tips_precip">
+        <item>Şemsiye veya yağmurluk al.</item>
+        <item>Açık hava planını daha erken saatlere kaydır.</item>
+        <item>Kapalı alan alternatiflerini değerlendir.</item>
+    </string-array>
+    <string-array name="guard_tips_wind">
+        <item>Balkon ve bahçedeki gevşek eşyaları sabitle.</item>
+        <item>Ağaç ve tabelaların altında beklemekten kaçın.</item>
+        <item>Bisiklet ve scooter kullanımını ertele.</item>
+    </string-array>
+    <string-array name="guard_tips_heat">
+        <item>Gün boyu bol su iç.</item>
+        <item>Öğle saatlerinde doğrudan güneşten kaçın.</item>
+        <item>Açık renkli, ince kıyafetler tercih et.</item>
+    </string-array>
+    <string-array name="guard_tips_frost">
+        <item>Kaygan zeminlere karşı dikkatli yürü.</item>
+        <item>Hassas bitkileri içeri al veya ört.</item>
+        <item>Araç camlarını ve lastikleri kontrol et.</item>
+    </string-array>
+    <string-array name="guard_tips_uv">
+        <item>Yüksek koruma faktörlü güneş kremi sür.</item>
+        <item>Şapka ve güneş gözlüğü kullan.</item>
+        <item>Öğle saatlerinde gölgede kal.</item>
+    </string-array>
+    <string-array name="guard_tips_storm">
+        <item>Açık alanda ve su kenarında kalma.</item>
+        <item>Elektrikli cihazları gerekmedikçe prizden çek.</item>
+        <item>Resmî kurumların uyarılarını takip et.</item>
+    </string-array>
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_risk_prefs">Risk Tercihleri</string>
+    <string name="settings_risk_question">Hangi riskleri takip etmek istersin?</string>
+    <string name="settings_risk_precip">Yağış</string>
+    <string name="settings_risk_wind">Kuvvetli Rüzgâr</string>
+    <string name="settings_risk_gust">Ani Rüzgâr</string>
+    <string name="settings_risk_heat">Aşırı Sıcaklık</string>
+    <string name="settings_risk_frost">Düşük Sıcaklık / Don</string>
+    <string name="settings_risk_uv">UV İndeksi</string>
+    <string name="settings_risk_storm">Gök Gürültüsü</string>
+    <string name="settings_storm_locked">Genel güvenlik kontrolü, kapatılamaz</string>
+    <string name="settings_thresholds">Eşik Değerleri</string>
+    <string name="settings_th_precip">Yağış olasılığı</string>
+    <string name="settings_th_wind">Rüzgâr hızı</string>
+    <string name="settings_th_heat">Sıcaklık (aşırı)</string>
+    <string name="settings_th_frost">Sıcaklık (düşük)</string>
+    <string name="settings_th_uv">UV indeksi</string>
+    <string name="settings_notifications">Bildirimler</string>
+    <string name="settings_other">Diğer</string>
+    <string name="settings_manage_cities">Şehirleri yönet</string>
     <string name="guard_favorites_empty">Favori şehir yok. Şehir listesindeki yıldızla ekleyebilirsiniz.</string>
     <string name="guard_favorite_failed">Bu şehir için hava verisi alınamadı.</string>
     <string name="guard_favorite_add">Favorilere ekle</string>
     <string name="guard_favorite_remove">Favorilerden çıkar</string>
     <string name="guard_risk_precip">Yağış</string>
-    <string name="guard_risk_wind">Kuvvetli rüzgâr</string>
-    <string name="guard_risk_gust">Ani rüzgâr</string>
-    <string name="guard_risk_heat">Aşırı sıcaklık</string>
+    <string name="guard_risk_wind">Kuvvetli Rüzgâr</string>
+    <string name="guard_risk_gust">Ani Rüzgâr</string>
+    <string name="guard_risk_heat">Aşırı Sıcaklık</string>
     <string name="guard_risk_frost">Don</string>
     <string name="guard_risk_uv">UV</string>
-    <string name="guard_risk_storm">Gök gürültülü hava</string>
+    <string name="guard_risk_storm">Gök Gürültüsü</string>
     <string name="guard_action_probability">Yağış olasılığı eşiği aştı. Miktar bilinmediği için şiddetli yağış denemez.</string>
     <string name="guard_action_amount">Beklenen yağış miktarı eşiği aştı. Olasılık bu sonucu tek başına kurmaz.</string>
     <string name="guard_action_both">Yağış olasılığı ve miktarı birlikte eşiği aştı. Açık alanı ertelemeyi düşünün.</string>
@@ -246,7 +473,7 @@
     <string name="guard_action_heat">Sıcaklık eşiği aştı. Güneşte uzun süre kalmayın.</string>
     <string name="guard_action_frost">Hava sıcaklığı don eşiğine indi. Islak zemin ve bitkiler etkilenebilir.</string>
     <string name="guard_action_uv">UV indeksi eşiği aştı. Güneşe çıkacaksanız korunun.</string>
-    <string name="guard_action_storm">Hava kodu gök gürültülü fırtınayı gösteriyor. Bu bir resmî uyarı değildir.</string>
+    <string name="guard_action_storm">Hava kodu gök gürültülü fırtınayı gösteriyor. Açık alanda kalmayın.</string>
     <string name="guard_general_safety">Genel güvenlik</string>
     <string name="guard_valid_at">Geçerli saat %1$s</string>
     <string name="guard_thresholds_note">Eşikler °C, km/sa, mm, % ve UV indeksi olarak tutulur.</string>
@@ -270,6 +497,6 @@
     <string name="guard_notification_blocked">Bildirimler sistem ayarlarında kapalı.</string>
     <string name="guard_notification_channel">Hava riskleri</string>
     <string name="guard_notification_channel_desc">Favori şehirlerde eşik aşan hava riskleri</string>
-    <string name="guard_notification_title">%1$s · %2$s</string>
-    <string name="guard_notification_body">%1$s. %2$s. %3$s Resmî uyarı değildir.</string>
+    <string name="guard_notification_title">%1$s Uyarısı</string>
+    <string name="guard_notification_body">%1$s · %2$s · %3$s. %4$s Resmî uyarı değildir.</string>
 </resources>

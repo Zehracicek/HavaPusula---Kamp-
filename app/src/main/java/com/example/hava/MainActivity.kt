@@ -31,10 +31,10 @@ class MainActivity : ComponentActivity() {
         if (AppPreferencesStore(this).notificationsEnabled()) {
             WeatherGuardScheduler.ensureScheduled(this)
         }
-        // Arka plan her zaman koyu/doygun tonlarda olduğu için sistem çubuğu ikonları açık renk
+        // Sayfa zemini açık renk olduğu için sistem çubuğu ikonları koyu
         enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.dark(Color.Transparent.toArgb()),
-            navigationBarStyle = SystemBarStyle.dark(Color.Transparent.toArgb()),
+            statusBarStyle = SystemBarStyle.light(Color.Transparent.toArgb(), Color.Transparent.toArgb()),
+            navigationBarStyle = SystemBarStyle.light(Color.White.toArgb(), Color.White.toArgb()),
         )
         setContent {
             HavaTheme {

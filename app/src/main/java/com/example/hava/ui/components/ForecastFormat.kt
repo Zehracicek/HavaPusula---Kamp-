@@ -20,6 +20,25 @@ internal fun fullDayTitle(isoDate: String): String = runCatching {
     SimpleDateFormat("EEEE, d MMMM", TurkishLocale).format(requireNotNull(date))
 }.getOrDefault(isoDate)
 
+/** "yyyy-MM-dd" → "Cumartesi" */
+internal fun weekdayName(isoDate: String): String = formatDate(isoDate, "EEEE")
+
+/** "yyyy-MM-dd" → "24 Nisan Perşembe" */
+internal fun dayMonthWeekday(isoDate: String): String = formatDate(isoDate, "d MMMM EEEE")
+
+/** "yyyy-MM-dd" → "26 Nisan 2025, Cumartesi" */
+internal fun longDate(isoDate: String): String = formatDate(isoDate, "d MMMM yyyy, EEEE")
+
+private fun formatDate(isoDate: String, pattern: String): String = runCatching {
+    val date = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(isoDate.take(10))
+    SimpleDateFormat(pattern, TurkishLocale).format(requireNotNull(date))
+}.getOrDefault(isoDate)
+
+/** Türkçe yüzde yazımı: 62 → "%62" */
+internal fun percentTr(value: Int): String = "%$value"
+
+internal fun String.lowercaseTr(): String = lowercase(TurkishLocale)
+
 /** Türkçe ondalık ayırıcıyla tek basamaklı sayı: 0.4 → "0,4" */
 internal fun oneDecimal(value: Double): String = String.format(TurkishLocale, "%.1f", value)
 
