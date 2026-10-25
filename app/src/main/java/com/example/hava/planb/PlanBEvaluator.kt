@@ -4,15 +4,20 @@ class PlanBEvaluator(
     private val engine: ActivityScoringEngine = ActivityScoringEngine(),
     private val finder: BestWindowFinder = BestWindowFinder(),
     private val alternatives: PlanBAlternatives = PlanBAlternatives(engine, finder),
+    private val thresholds: ActivityThresholds = ActivityThresholds,
 ) {
 
+    /** [custom] yalnızca [ActivityType.CUSTOM] için kullanılır. */
     fun evaluate(
         activity: ActivityType,
         date: String,
         startHour: Int,
         endHour: Int,
         dayHours: List<HourConditions>,
+        custom: CustomActivity? = null,
     ): ActivityEvaluation {
+        val customActivity = custom?.takeIf { activity == ActivityType.CUSTOM }
+        val profile = customActivity?.let { thresholds.profile(it) } ?: thresholds.profile(activity)
         val requested = (endHour - startHour + 1).coerceAtLeast(0)
         val selected = dayHours
             .filter { it.time.substringBefore('T') == date }
@@ -21,12 +26,13 @@ class PlanBEvaluator(
                 clock != null && clock in startHour..endHour
             }
             .sortedBy { it.time }
-        val window = engine.scoreWindow(activity, selected)
+        val window = engine.scoreWindow(profile, selected)
         val ranked = finder.rank(window.hours)
         val best = finder.bestWindow(window.hours)
-        val suggestions = alternatives.suggest(activity, dayHours, selected, window)
+        val suggestions = alternatives.suggest(profile, dayHours, selected, window)
         return ActivityEvaluation(
             activity = activity,
+            custom = customActivity,
             date = date,
             startHour = startHour,
             endHour = endHour,
@@ -36,7 +42,7 @@ class PlanBEvaluator(
             bestWindow = best,
             suggestions = suggestions,
             measurements = measurementsOf(selected),
-            windDirectionKnown = activity == ActivityType.BIKE && selected.any { it.windDirectionDegrees != null },
+            windDirectionKnown = profile.tracksWindDirection && selected.any { it.windDirectionDegrees != null },
         )
     }
 }

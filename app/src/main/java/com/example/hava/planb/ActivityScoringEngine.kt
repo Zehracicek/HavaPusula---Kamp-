@@ -6,23 +6,28 @@ class ActivityScoringEngine(
     private val thresholds: ActivityThresholds = ActivityThresholds,
 ) {
 
-    fun scoreHour(activity: ActivityType, hour: HourConditions): HourAssessment {
+    fun scoreHour(activity: ActivityType, hour: HourConditions): HourAssessment =
+        scoreHour(thresholds.profile(activity), hour)
+
+    fun scoreWindow(activity: ActivityType, hours: List<HourConditions>): WindowAssessment =
+        scoreWindow(thresholds.profile(activity), hours)
+
+    fun scoreHour(profile: ActivityProfile, hour: HourConditions): HourAssessment {
         val snapshot = hour.snapshot()
         val safety = safetyOf(hour)
-        val specs = thresholds.specs(activity)
         val scored = mutableListOf<CriterionAssessment>()
         val missingCritical = mutableListOf<FactorKind>()
         val missingOptional = mutableListOf<FactorKind>()
 
-        for (spec in specs) {
-            val assessment = assess(activity, spec, hour)
+        for (spec in profile.specs) {
+            val assessment = assess(profile, spec, hour)
             if (assessment == null) {
                 if (spec.critical) missingCritical += spec.kind else missingOptional += spec.kind
             } else {
                 scored += assessment
             }
         }
-        if (activity == ActivityType.BIKE && hour.windDirectionDegrees == null) {
+        if (profile.tracksWindDirection && hour.windDirectionDegrees == null) {
             missingOptional += FactorKind.WIND_DIRECTION
         }
 
@@ -56,8 +61,8 @@ class ActivityScoringEngine(
         )
     }
 
-    fun scoreWindow(activity: ActivityType, hours: List<HourConditions>): WindowAssessment {
-        val unavailable = thresholds.unavailable(activity)
+    fun scoreWindow(profile: ActivityProfile, hours: List<HourConditions>): WindowAssessment {
+        val unavailable = profile.unavailable
         if (hours.isEmpty()) {
             return WindowAssessment(
                 hours = emptyList(),
@@ -65,7 +70,7 @@ class ActivityScoringEngine(
                 unavailable = unavailable,
             )
         }
-        val assessed = hours.map { scoreHour(activity, it) }
+        val assessed = hours.map { scoreHour(profile, it) }
         val scored = assessed.filterIsInstance<HourAssessment.Scored>()
         if (scored.isEmpty()) {
             val missing = assessed.filterIsInstance<HourAssessment.Insufficient>()
@@ -117,8 +122,8 @@ class ActivityScoringEngine(
         )
     }
 
-    private fun assess(activity: ActivityType, spec: CriterionSpec, hour: HourConditions): CriterionAssessment? {
-        val value = measured(activity, spec.kind, hour) ?: return null
+    private fun assess(profile: ActivityProfile, spec: CriterionSpec, hour: HourConditions): CriterionAssessment? {
+        val value = measured(profile, spec.kind, hour) ?: return null
         return CriterionAssessment(
             kind = spec.kind,
             score = value.score,
@@ -131,9 +136,9 @@ class ActivityScoringEngine(
         )
     }
 
-    private fun measured(activity: ActivityType, kind: FactorKind, hour: HourConditions): Measured? = when (kind) {
+    private fun measured(profile: ActivityProfile, kind: FactorKind, hour: HourConditions): Measured? = when (kind) {
         FactorKind.PRECIPITATION_PROBABILITY -> hour.precipitationProbabilityPercent?.let { probability ->
-            val badAt = thresholds.precipitationProbabilityBadAt(activity)
+            val badAt = profile.precipitationProbabilityBadAt
             Measured(
                 score = decliningScore(probability.toDouble(), goodUntil = 0.0, badAt = badAt.toDouble()),
                 measured = probability.toDouble(),
@@ -143,7 +148,7 @@ class ActivityScoringEngine(
         }
         FactorKind.PRECIPITATION_AMOUNT -> hour.precipitationMm?.let { mm ->
             Measured(
-                score = decliningScore(mm, goodUntil = 0.0, badAt = thresholds.precipitationAmountBadAt(activity)),
+                score = decliningScore(mm, goodUntil = 0.0, badAt = profile.precipitationAmountBadAt),
                 measured = mm,
                 unit = MeasurementUnit.MILLIMETER,
                 reason = ReasonCode.PRECIPITATION,
@@ -153,7 +158,7 @@ class ActivityScoringEngine(
             val apparent = hour.apparentTemperatureC
             val actual = hour.temperatureC
             val used = apparent ?: actual ?: return null
-            val band = thresholds.comfort(activity)
+            val band = profile.comfort
             val reason = when {
                 used < band.idealLow -> ReasonCode.COLD
                 used > band.idealHigh -> ReasonCode.HEAT
@@ -168,7 +173,7 @@ class ActivityScoringEngine(
             )
         }
         FactorKind.WIND_SPEED -> hour.windSpeedKmh?.let { speed ->
-            val band = thresholds.wind(activity)
+            val band = profile.wind
             Measured(
                 score = decliningScore(speed, band.goodUntil, band.badAt),
                 measured = speed,
@@ -177,7 +182,7 @@ class ActivityScoringEngine(
             )
         }
         FactorKind.WIND_GUSTS -> hour.windGustsKmh?.let { speed ->
-            val band = thresholds.gust(activity)
+            val band = profile.gust
             Measured(
                 score = decliningScore(speed, band.goodUntil, band.badAt),
                 measured = speed,
@@ -186,7 +191,7 @@ class ActivityScoringEngine(
             )
         }
         FactorKind.UV_INDEX -> {
-            val band = thresholds.uv(activity) ?: return null
+            val band = profile.uv ?: return null
             hour.uvIndex?.let { uv ->
                 Measured(
                     score = decliningScore(uv, band.goodUntil, band.badAt),

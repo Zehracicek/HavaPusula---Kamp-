@@ -153,6 +153,40 @@ class ActivityScoringEngineTest {
         )
     }
 
+    @Test
+    fun `özel aktivitede yalnızca seçilen ölçütler puanlanır`() {
+        val archery = CustomActivity("Okçuluk", setOf(CustomFactor.WIND, CustomFactor.PRECIPITATION))
+        val profile = ActivityThresholds.profile(archery)
+        assertEquals(1.0, profile.specs.sumOf { it.weight }, 0.001)
+        val kinds = profile.specs.map { it.kind }.toSet()
+        assertTrue(FactorKind.WIND_SPEED in kinds)
+        assertTrue(FactorKind.TEMPERATURE !in kinds)
+        assertTrue(FactorKind.UV_INDEX !in kinds)
+
+        val freezing = engine.scoreHour(profile, hour(temperature = -3.0, apparent = -6.0)) as HourAssessment.Scored
+        assertTrue(freezing.factors.none { it.kind == FactorKind.TEMPERATURE })
+        assertTrue(freezing.score >= ActivityThresholds.SUITABLE_AT)
+    }
+
+    @Test
+    fun `rüzgâra hassas özel aktivite rüzgârda yürüyüşten düşük puan alır`() {
+        val archery = ActivityThresholds.profile(CustomActivity("Okçuluk", setOf(CustomFactor.WIND)))
+        val breezy = hour(wind = 22.0, gust = 30.0)
+        val archeryScore = (engine.scoreHour(archery, breezy) as HourAssessment.Scored).score
+        val walkScore = (engine.scoreHour(ActivityType.WALK, breezy) as HourAssessment.Scored).score
+        assertTrue(archeryScore < walkScore)
+    }
+
+    @Test
+    fun `özel aktivite değerlendirmesi adı taşır`() {
+        val custom = CustomActivity("Okçuluk", setOf(CustomFactor.WIND))
+        val evaluation = evaluator.evaluate(ActivityType.CUSTOM, "2026-10-25", 14, 14, listOf(hour()), custom)
+        assertEquals("Okçuluk", evaluation.custom?.name)
+        assertEquals(IndoorSuggestion.GENERAL, ActivityThresholds.profile(custom).indoor)
+        val preset = evaluator.evaluate(ActivityType.PICNIC, "2026-10-25", 14, 14, listOf(hour()), custom)
+        assertNull(preset.custom)
+    }
+
     private fun hour(
         time: String = "2026-10-25T14:00",
         temperature: Double = 22.0,
