@@ -6,7 +6,38 @@ enum class ActivityType {
     RUN,
     BIKE,
     BEACH,
+    CAMPING,
+    HIKING,
+    YOGA,
+    TENNIS,
+    BASKETBALL,
+    VOLLEYBALL,
+    FOOTBALL,
+    FISHING,
+
+    /** Kullanıcının adını ve önemsediği ölçütleri seçtiği aktivite; bkz. [CustomActivity]. */
+    CUSTOM,
 }
+
+/** Özel aktivitede kullanıcının önemsediği hava ölçütleri. */
+enum class CustomFactor {
+    PRECIPITATION,
+    WIND,
+    TEMPERATURE,
+    UV,
+}
+
+enum class TemperaturePreference {
+    COOL,
+    MILD,
+    WARM,
+}
+
+data class CustomActivity(
+    val name: String,
+    val factors: Set<CustomFactor>,
+    val temperature: TemperaturePreference = TemperaturePreference.MILD,
+)
 
 enum class SuitabilityLevel {
     SUITABLE,
@@ -65,4 +96,9 @@ enum class IndoorSuggestion {
     GYM_RUN,
     INDOOR_BIKE,
     INDOOR_POOL,
+    CABIN,
+    YOGA_STUDIO,
+    INDOOR_COURT,
+    INDOOR_FOOTBALL,
+    GENERAL,
 }

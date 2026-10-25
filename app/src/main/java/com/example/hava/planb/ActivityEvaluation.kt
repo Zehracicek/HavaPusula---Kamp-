@@ -104,6 +104,8 @@ data class Measurement(
 
 data class ActivityEvaluation(
     val activity: ActivityType,
+    /** Özel aktivitede kullanıcının girdiği ad ve ölçütler. */
+    val custom: CustomActivity? = null,
     val date: String,
     val startHour: Int,
     val endHour: Int,

@@ -15,6 +15,13 @@ class PlanBAlternatives(
         dayHours: List<HourConditions>,
         selectedHours: List<HourConditions>,
         selected: WindowAssessment,
+    ): PlanSuggestions = suggest(thresholds.profile(activity), dayHours, selectedHours, selected)
+
+    fun suggest(
+        profile: ActivityProfile,
+        dayHours: List<HourConditions>,
+        selectedHours: List<HourConditions>,
+        selected: WindowAssessment,
     ): PlanSuggestions {
         val overall = selected.overall
         if (overall is OverallAssessment.Scored && overall.level == SuitabilityLevel.SUITABLE) {
@@ -25,14 +32,14 @@ class PlanBAlternatives(
         val selectedScore = (overall as? OverallAssessment.Scored)?.score
         val selectedWindow = finder.bestWindow(selected.hours)
 
-        val dayWindow = engine.scoreWindow(activity, dayHours.sortedBy { it.time })
+        val dayWindow = engine.scoreWindow(profile, dayHours.sortedBy { it.time })
         val better = finder.bestWindow(dayWindow.hours)
             ?.takeIf { it.fullySuitable && !sameWindow(it, selectedWindow) }
             ?.takeIf { selectedScore == null || it.score >= selectedScore + thresholds.ALTERNATIVE_MARGIN }
 
-        val alternative = bestAlternative(activity, selectedHours, selectedScore)
+        val alternative = bestAlternative(profile, selectedHours, selectedScore)
         val indoor = if (alternative == null || alternative.level != SuitabilityLevel.SUITABLE) {
-            thresholds.indoorFor(activity)
+            profile.indoor
         } else {
             null
         }
@@ -45,12 +52,12 @@ class PlanBAlternatives(
     }
 
     private fun bestAlternative(
-        activity: ActivityType,
+        profile: ActivityProfile,
         selectedHours: List<HourConditions>,
         selectedScore: Int?,
     ): AlternativeActivity? {
         if (selectedHours.isEmpty()) return null
-        return thresholds.alternativesFor(activity)
+        return profile.alternatives
             .mapNotNull { candidate ->
                 val overall = engine.scoreWindow(candidate, selectedHours).overall as? OverallAssessment.Scored
                     ?: return@mapNotNull null
